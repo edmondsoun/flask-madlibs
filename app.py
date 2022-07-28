@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request
-from flask_debugtoolbar import DebugToolbarExtension
+#from flask_debugtoolbar import DebugToolbarExtension
 
 from stories import silly_story
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "secret"
 
-debug = DebugToolbarExtension(app)
+#debug = DebugToolbarExtension(app)
 
 #route for questions
 @app.get("/")
@@ -17,3 +17,12 @@ def index():
     return render_template("questions.html",prompts=silly_story.prompts)
 
 #route for results
+@app.get("/results")
+def generate_story():
+    """take form inputs, navigate to /results, generate and display story"""
+
+    answers = request.args.to_dict() 
+    """ for arg in request.args.items():
+        answers.append(arg) """
+    
+    return render_template("results.html",story = silly_story.generate(answers))
