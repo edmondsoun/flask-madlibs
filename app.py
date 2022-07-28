@@ -20,9 +20,7 @@ def index():
 @app.get("/results")
 def generate_story():
     """take form inputs, navigate to /results, generate and display story"""
-
-    answers = request.args.to_dict() 
-    """ for arg in request.args.items():
-        answers.append(arg) """
     
-    return render_template("results.html",story = silly_story.generate(answers))
+    story = silly_story.generate(request.args)
+
+    return render_template("results.html",story=story)
